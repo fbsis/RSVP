@@ -1,9 +1,11 @@
 package com.fbsis.eventtuar.rsvp.domain;
 
 import lombok.Data;
-import lombok.Setter;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 
 @Entity
 @Data
@@ -19,10 +21,6 @@ public class user {
 
     public String password;
 
-    public String namePage;
-
-    public Integer theme;
-
     public user(){
 
     }
@@ -31,8 +29,6 @@ public class user {
         this.name = name;
         this.email = email;
         this.password = password;
-        this.namePage = namePage;
-        this.theme = theme;
 
     }
 

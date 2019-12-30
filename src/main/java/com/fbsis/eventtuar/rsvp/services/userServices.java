@@ -1,14 +1,12 @@
 package com.fbsis.eventtuar.rsvp.services;
 
-import com.fbsis.eventtuar.rsvp.controllers.request.adminCreateLoginRequest;
 import com.fbsis.eventtuar.rsvp.controllers.request.adminLoginRequest;
-import org.springframework.beans.factory.annotation.Autowired;
 import com.fbsis.eventtuar.rsvp.domain.user;
 import com.fbsis.eventtuar.rsvp.repository.userRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
-import javax.validation.Valid;
 import java.util.Optional;
 
 @Service
@@ -29,8 +27,6 @@ public class userServices {
         User.name = name;
         User.email = email;
         User.password = password;
-        User.namePage = namePage;
-        User.theme = theme;
 
         return userRepository.save(User);
     }
