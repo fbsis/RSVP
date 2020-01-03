@@ -6,12 +6,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
-@RequestMapping("/admin/")
+@RequestMapping("/AdminController/")
 public class administracao {
 
     @GetMapping("/")
     public ModelAndView listar() {
-        ModelAndView modelAndView = new ModelAndView("admin/index");
+        ModelAndView modelAndView = new ModelAndView("AdminController/index");
 
         return modelAndView;
     }
