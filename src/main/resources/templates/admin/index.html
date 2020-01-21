@@ -1,10 +1,19 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>admin</title>
-</head>
-<body>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<div th:replace="fragments/header"></div>
 
-</body>
-</html>
+<div class="container">
+
+    <p th:if="${#request.getParameter('wrong-password') != null}" class="alert alert-danger" role="alert">A senha está errada</p>
+
+
+    <form method="post" th:action="@{/admin/}">
+    <div class="form-group">
+        <label for="senha">Senha de acesso</label>
+        <input type="password" class="form-control" id="senha" name="senha" aria-describedby="emailHelp">
+    </div>
+    <button type="submit" class="btn btn-primary">Entrar</button>
+</form>
+</div>
+
+<div th:replace="fragments/footer"></div>

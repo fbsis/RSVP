@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<div th:replace="fragments/header"></div>
+
+<div class="container">
+
+    <form  method="post" th:action="@{/admin/save}">
+        <div class="form-group">
+            <label for="eventName">Nome do Evento</label>
+            <input type="input" class="form-control" id="eventName" name="eventName">
+            <small class="form-text text-muted">Por exemplo: Casamento de Vanessa & Felipe</small>
+        </div>
+
+        <div class="form-group">
+            <label for="data">Data do evento</label>
+            <input type="data" class="form-control" id="data" name="data">
+            <small class="form-text text-muted">Formato: dd/mm/yyyy</small>
+        </div>
+
+        <div class="form-group">
+            <label for="hour">Hora</label>
+            <input type="hour" class="form-control" id="hour" name="hour">
+            <small class="form-text text-muted">Formato: hh:mm</small>
+        </div>
+
+        <div class="form-group">
+            <label for="local">Local</label>
+            <textarea class="form-control" id="local" name="local"></textarea>
+            <small class="form-text text-muted">Exemplo: Salão de festas Rapadura de são josé, endereço....</small>
+        </div>
+
+
+        <input type="hidden" class="form-control" id="id" name="id">
+        <button type="submit" class="btn btn-primary">Salvar</button>
+    </form>
+
+
+
+</div>
+
+<div th:replace="fragments/footer"></div>

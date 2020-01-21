@@ -2,10 +2,9 @@ package com.fbsis.eventtuar.rsvp.domain;
 
 import lombok.Data;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Data
@@ -20,6 +19,12 @@ public class user {
     public String email;
 
     public String password;
+
+    @OneToMany(
+            cascade = CascadeType.ALL,
+            orphanRemoval = true
+    )
+    public List<party> parties = new ArrayList<>();
 
     public user(){
 

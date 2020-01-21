@@ -23,7 +23,7 @@ public class party {
 
     public String inviteUrl;
 
-    public String eventName; //
+    public String eventName; // Casamento de Vanessa & Felipe
 
     public Date data;
 
@@ -41,7 +41,7 @@ public class party {
     )
     public List<invites> invites = new ArrayList<>();
 
-    party() {
+    public party() {
         this.inviteUrl = UUID.randomUUID().toString().substring(0,8);
     }
 
