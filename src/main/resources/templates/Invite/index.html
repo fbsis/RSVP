@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<div th:replace="fragments/header"></div>
+
+<div class="container">
+
+    Convite: <b th:text="${url}" ></b>
+    <p th:if="${#request.getParameter('wrong-password') != null}" class="alert alert-danger" role="alert">A senha está errada</p>
+
+
+    <form method="post" th:action="@{/admin/}">
+        <div class="form-group">
+            <label for="senha">Nome</label>
+            <input type="password" class="form-control" id="senha" name="senha" aria-describedby="emailHelp">
+        </div>
+        <button type="submit" class="btn btn-primary">Entrar</button>
+    </form>
+</div>
+
+<div th:replace="fragments/footer"></div>

@@ -6,12 +6,16 @@ import com.fbsis.eventtuar.rsvp.domain.user;
 import com.fbsis.eventtuar.rsvp.repository.partyRepository;
 import com.fbsis.eventtuar.rsvp.repository.userRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
+import java.sql.Time;
+import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.Optional;
 
 @Controller
@@ -80,19 +84,24 @@ public class AdminMVCController {
     @PostMapping("/save")
     public ModelAndView saveParty(
             @RequestParam("eventName") String eventName,
-            @RequestParam("data") String data,
-            @RequestParam("hour") String hour,
+            @RequestParam("data") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date data,
+            @RequestParam("hour") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime hour,
             @RequestParam("local") String local,
+            @RequestParam("description") String description,
 
             HttpSession session) {
         if(!isLogged(session)){
             return new ModelAndView("redirect:/admin/?wrong-password");
         }
 
-/*        party partyResource = new party();
-        partyResource = partyForm;
+        party partyResource = new party();
+        partyResource.eventName = eventName;
+        partyResource.data = data;
+        partyResource.hour = hour;
+        partyResource.local = local;
+        partyResource.description = description;
 
-        partyRepository.save(partyResource);*/
+        partyRepository.save(partyResource);
 
         return new ModelAndView("redirect:/admin/parties/?msg=Salvo com sucesso");
     }

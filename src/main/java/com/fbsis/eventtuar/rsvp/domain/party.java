@@ -27,7 +27,7 @@ public class party {
 
     public Date data;
 
-    public Time hour;
+    public LocalDateTime hour;
 
     public String local;
 
