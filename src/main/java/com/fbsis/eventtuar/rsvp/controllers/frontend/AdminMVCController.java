@@ -23,7 +23,7 @@ import java.util.Date;
 import java.util.Optional;
 
 @Controller
-@RequestMapping("/admin/")
+@RequestMapping("/admin")
 public class AdminMVCController {
 
     @Autowired
@@ -101,7 +101,7 @@ public class AdminMVCController {
 
         party partyResource = new party();
         partyResource.eventName = eventName;
-        partyResource.data = new SimpleDateFormat("yyyy-MM-dd").parse(data);
+        partyResource.data = data;
         partyResource.hour = hour;
         partyResource.local = local;
         partyResource.description = description;

@@ -8,11 +8,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.Optional;
 
 @Controller
+@RequestMapping("")
 public class InviteMVCController {
 
     @Autowired
@@ -26,10 +28,10 @@ public class InviteMVCController {
 
         Optional<party> search = partyRep.findByInviteUrl(inviteUrl);
 
-        String view = "Invite/index";
-        if(!search.isPresent())         view = "Invite/invalido";
+        if(!search.isPresent() || inviteUrl.equals("admin"))
+            return new ModelAndView("Invite/invalido");
 
-        ModelAndView modelAndView = new ModelAndView(view);
+        ModelAndView modelAndView = new ModelAndView("Invite/index");
         modelAndView.addObject("url", inviteUrl);
 
         modelAndView.addObject("detalhes", search.get());

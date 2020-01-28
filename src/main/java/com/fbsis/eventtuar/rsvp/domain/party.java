@@ -26,8 +26,7 @@ public class party {
 
     public String eventName; // Casamento de Vanessa & Felipe
 
-    @DateTimeFormat(pattern = "dd-MM-yyyy")
-    public Date data;
+    public String data;
 
     public String hour;
 
