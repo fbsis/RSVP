@@ -13,7 +13,7 @@
 
         <div class="form-group">
             <label for="data">Data do evento</label>
-            <input type="data" class="form-control" id="data" name="data">
+            <input type="date" class="form-control" id="data" name="data">
             <small class="form-text text-muted">Formato: dd/mm/yyyy</small>
         </div>
 
@@ -29,6 +29,11 @@
             <small class="form-text text-muted">Exemplo: Salão de festas Rapadura de são josé, endereço....</small>
         </div>
 
+        <div class="form-group">
+            <label for="local">Descrição</label>
+            <textarea class="form-control" id="description" name="description"></textarea>
+            <small class="form-text text-muted">Descreva alguma coisa do evento, que vai aparecer na parte superior</small>
+        </div>
 
         <input type="hidden" class="form-control" id="id" name="id">
         <button type="submit" class="btn btn-primary">Salvar</button>

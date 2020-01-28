@@ -8,6 +8,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 import javax.persistence.*;
 import java.sql.Time;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -25,9 +26,10 @@ public class party {
 
     public String eventName; // Casamento de Vanessa & Felipe
 
+    @DateTimeFormat(pattern = "dd-MM-yyyy")
     public Date data;
 
-    public Time hour;
+    public String hour;
 
     public String local;
 

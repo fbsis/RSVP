@@ -1,17 +1,25 @@
 package com.fbsis.eventtuar.rsvp.controllers.frontend;
 
-import com.fbsis.eventtuar.rsvp.controllers.request.adminLoginRequest;
 import com.fbsis.eventtuar.rsvp.domain.party;
 import com.fbsis.eventtuar.rsvp.domain.user;
 import com.fbsis.eventtuar.rsvp.repository.partyRepository;
 import com.fbsis.eventtuar.rsvp.repository.userRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpSession;
-import javax.validation.Valid;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.util.Date;
 import java.util.Optional;
 
 @Controller
@@ -57,13 +65,14 @@ public class AdminMVCController {
     }
 
     @GetMapping("/parties")
-    public ModelAndView parties(HttpSession session) {
+    public ModelAndView parties(HttpSession session, Model model) {
         if(!isLogged(session)){
             return new ModelAndView("redirect:/admin/?wrong-password");
         }
 
         ModelAndView modelAndView = new ModelAndView("admin/parties");
 
+        modelAndView.addObject("parties", partyRepository.findAll());
         return modelAndView;
     }
 
@@ -80,19 +89,24 @@ public class AdminMVCController {
     @PostMapping("/save")
     public ModelAndView saveParty(
             @RequestParam("eventName") String eventName,
-            @RequestParam("data") String data,
+            @RequestParam("data")  String data,
             @RequestParam("hour") String hour,
-            @RequestParam("local") String local,
+            @RequestParam("local")  String local,
+            @RequestParam("description") String description,
 
-            HttpSession session) {
+            HttpSession session) throws ParseException {
         if(!isLogged(session)){
             return new ModelAndView("redirect:/admin/?wrong-password");
         }
 
-/*        party partyResource = new party();
-        partyResource = partyForm;
+        party partyResource = new party();
+        partyResource.eventName = eventName;
+        partyResource.data = new SimpleDateFormat("yyyy-MM-dd").parse(data);
+        partyResource.hour = hour;
+        partyResource.local = local;
+        partyResource.description = description;
 
-        partyRepository.save(partyResource);*/
+        partyRepository.save(partyResource);
 
         return new ModelAndView("redirect:/admin/parties/?msg=Salvo com sucesso");
     }
