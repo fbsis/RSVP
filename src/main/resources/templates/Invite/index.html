@@ -1,89 +1,97 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
-  <div th:replace="fragments/header"></div>
+<div th:replace="fragments/header"></div>
 
-  <div class="container">
-    <div class="row">
-      <div class=" col-md-12">
-        <label for="nome">Evento:</label>
-        <b th:text="${detalhes.eventName}"></b>
-      </div>
-      <div class="col-md-12">
-        <label for="nome">Data:</label>
-        <b th:text="${detalhes.data}"></b>
-      </div>
-      <div class="col-md-12">
-        <label for="nome">Local:</label>
-        <b th:text="${detalhes.local}"></b>
-      </div>
-      <div class="col-md-12">
-        <label for="nome">Horário:</label>
-        <b th:text="${detalhes.hour}"></b>
-      </div>
+<style>
+  .tbRow {
+    border: 1px solid rgba(0, 0, 0, .125);
+  }
+</style>
+<div class="container">
+  <div class="row">
+    <div class=" col-md-12">
+      <label for="nome">Evento:</label>
+      <b th:text="${detalhes.eventName}"></b>
+    </div>
+    <div class="col-md-12">
+      <label for="nome">Data:</label>
+      <b th:text="${detalhes.data}"></b>
+    </div>
+    <div class="col-md-12">
+      <label for="nome">Local:</label>
+      <b th:text="${detalhes.local}"></b>
+    </div>
+    <div class="col-md-12">
+      <label for="nome">Horário:</label>
+      <b th:text="${detalhes.hour}"></b>
+    </div>
 
-      <div class="col-md-12">
-        <b th:text="${detalhes.description}"></b>
+    <div class="col-md-12">
+      <b th:text="${detalhes.description}"></b>
+    </div>
+  </div>
+
+  <hr>
+  <form method="post" th:action="${urlSave}" >
+    <div>Meus dados</div>
+    <div class="form-row">
+      <div class="form-group col-md-6">
+        <label for="nome">Nome</label>
+        <input type="type" class="form-control" id="nome" name="nome" placeholder="Nome" />
+      </div>
+      <div class="form-group col-md-6">
+        <label for="sobrenome">Sobrenome</label>
+        <input type="type" class="form-control" id="sobrenome" name="sobrenome" placeholder="Sobrenome" />
       </div>
     </div>
 
-    <hr>
-    <form method="post" th:action="@{/admin/}">
-      <div>Meus dados</div>
-      <div class="form-row">
-        <div class="form-group col-md-6">
-          <label for="nome">Nome</label>
-          <input
-            type="nome"
-            class="form-control"
-            id="nome"
-            placeholder="Nome"
-          />
-        </div>
-        <div class="form-group col-md-6">
-          <label for="sobrenome">Sobrenome</label>
-          <input
-            type="sobrenome"
-            class="form-control"
-            id="sobrenome"
-            placeholder="Sobrenome"
-          />
-        </div>
-      </div>
+    <div class="form-group col-md-12">
+      <label for="nacompanhantes">Número de acompanhantes</label>
+      <input type="nacompanhantes" class="form-control" id="nacompanhantes" placeholder="Número de acompanhantes" />
+    </div>
 
-        <div class="form-group col-md-12">
-            <label for="nacompanhantes">Número de acompanhantes</label>
-            <input
-              type="nacompanhantes"
-              class="form-control"
-              id="nacompanhantes"
-              placeholder="Número de acompanhantes"
-            />
-        </div>
+    <div class="form-row tbConvidados">
 
-      <div class="form-row">
-        <div class="form-group col-md-6">
-          <label for="nome">Nome</label>
-          <input
-                  type="nome"
-                  class="form-control"
-                  name="acompanhante[0]['nome']"
-                  placeholder="Nome"
-          />
-        </div>
-        <div class="form-group col-md-6">
-          <label for="sobrenome">Sobrenome</label>
-          <input
-                  type="sobrenome"
-                  class="form-control"
-                  name="acompanhante[0]['sobrenome']"
-                  placeholder="Sobrenome"
-          />
-        </div>
-      </div>
+    </div>
 
-      <button type="submit" class="btn btn-primary">Enviar dados do convite</button>
-    </form>
-  </div>
+    <button type="button" onclick="submit()" class="btn btn-primary">Enviar dados do convite</button>
+  </form>
+</div>
 
-  <div th:replace="fragments/footer"></div>
+<div th:replace="fragments/footer"></div>
+
+<script>
+  function tb($id) {
+    $id_humano = $id + 1;
+    $template =
+      '<div class="form-group col-md-8 rowAcompanhante"><label for="nome">Nome ' + $id_humano +'</label>'+
+      '<input type="input" class="form-control" name="acompanhante[]" placeholder="Nome"/></div>' + 
+      '<div class="form-group col-md-4 rowAcompanhante"><label for="nome"><input type="checkbox" onclick="checkCrianca(this)">É uma criança </label>'+
+      '<input type="input" class="form-control d-none" name="idade[]" placeholder="Idade da criança" /></div>'
+    return $template;
+  }
+
+  function checkCrianca(val){
+    console.log(val, $(val).val());
+
+    select = $(val).parent().parent().find('input.form-control');
+    if($(val).is(":checked")){
+     select.removeClass('d-none');
+    }else{
+     select.addClass('d-none');
+    }
+
+  }
+
+  $("#nacompanhantes").change(function (v) {
+    qtd = $(this).val();
+
+    $(".tbConvidados").html("");
+    for (let index = 0; index < qtd; index++) {
+      $(".tbConvidados").append(tb(index));
+
+    }
+  });
+</script>
+
 </html>

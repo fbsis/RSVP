@@ -18,7 +18,7 @@ public class invites {
 
     public String name;
 
-    public String phone;
+    public String sobrenome;
 
     @OneToMany(
             cascade = CascadeType.ALL,
