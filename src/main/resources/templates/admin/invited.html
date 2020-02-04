@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<div th:replace="fragments/header"></div>
+
+<div class="container">
+
+    <p th:if="${#request.getParameter('msg') != null}" class="alert alert-danger" role="alert" th:text="${#request.getParameter('msg')}">A senha está errada</p>
+
+    <div class="row">
+        <div class="col-sm text-right">
+            <a type="button" class="btn btn-primary" th:href="@{/admin/add}">Nova presença</a>
+        </div>
+    </div>
+<br>
+
+<div class="row">
+    <div class=" col-md-12">
+      <label for="nome">Evento:</label>
+      <b th:text="${party.eventName}"></b>
+    </div>
+    <div class="col-md-12">
+      <label for="nome">Data:</label>
+      <b th:text="${party.data}"></b>
+    </div>
+    <div class="col-md-12">
+      <label for="nome">Local:</label>
+      <b th:text="${party.local}"></b>
+    </div>
+    <div class="col-md-12">
+      <label for="nome">Horário:</label>
+      <b th:text="${party.hour}"></b>
+    </div>
+</div>
+
+
+    <table class="table">
+        <thead class="thead-dark">
+        <tr>
+            <th scope="col">Nome</th>
+            <th scope="col">Data do aceite</th>
+            <th scope="col">N Acompanhantes</th>
+            <th scope="col">Acompanhantes</th>
+            <th scope="col"></th>
+        </tr>
+        </thead>
+        <tbody>
+
+
+        <tr th:each="party: ${party.invites}">
+            <td th:text="${party.name}"></td>
+            <td th:text="${party.data}"></td>
+            <td th:text="${party.countCompanion()}"></td>
+            <td>
+                <span th:each="companion: ${party.companion}">
+                <li th:text="${companion.name}"></li>
+                </span>
+            </td>
+            <td ><a th:href="'apagar/' + ${party.id}">Apagar</a></td>
+        </tr>
+
+
+
+        </tbody>
+    </table>
+    <a href="#" onclick="exportToExcel()" class="btn btn-link">Salvar em excel</a>
+
+
+
+</div>
+<script>
+function exportToExcel(){
+var htmls = "";
+            var uri = 'data:application/vnd.ms-excel;base64,';
+            var template = '<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40"><head><!--[if gte mso 9]><xml><x:ExcelWorkbook><x:ExcelWorksheets><x:ExcelWorksheet><x:Name>{worksheet}</x:Name><x:WorksheetOptions><x:DisplayGridlines/></x:WorksheetOptions></x:ExcelWorksheet></x:ExcelWorksheets></x:ExcelWorkbook></xml><![endif]--></head><body><table>{table}</table></body></html>'; 
+            var base64 = function(s) {
+                return window.btoa(unescape(encodeURIComponent(s)))
+            };
+
+            var format = function(s, c) {
+                return s.replace(/{(\w+)}/g, function(m, p) {
+                    return c[p];
+                })
+            };
+
+            htmls = $(".table").html();
+
+            var ctx = {
+                worksheet : 'Worksheet',
+                table : htmls
+            }
+
+
+            var link = document.createElement("a");
+            link.download = "export.xls";
+            link.href = uri + base64(format(template, ctx));
+            link.click();
+}</script>
+
+<div th:replace="fragments/footer"></div>

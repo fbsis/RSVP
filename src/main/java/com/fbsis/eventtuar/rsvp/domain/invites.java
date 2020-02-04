@@ -19,6 +19,9 @@ public class invites {
     public String name;
 
     public String sobrenome;
+    public String data;
+
+    public String idade;
 
     @OneToMany(
             cascade = CascadeType.ALL,
@@ -26,4 +29,7 @@ public class invites {
     )
     public List<invites> companion = new ArrayList<>();
 
+    public int countCompanion(){
+        return this.companion.size();
+    }
 }

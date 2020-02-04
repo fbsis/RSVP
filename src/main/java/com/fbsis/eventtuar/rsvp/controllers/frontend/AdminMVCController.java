@@ -8,10 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpSession;
@@ -86,6 +83,17 @@ public class AdminMVCController {
     }
 
 
+    @GetMapping("/apagar/{id}")
+    public ModelAndView apagar(HttpSession session, @PathVariable() Integer id) {
+        if(!isLogged(session)){
+            return new ModelAndView("redirect:/admin/?wrong-password");
+        }
+
+        partyRepository.deleteById(id);
+
+        return new ModelAndView("redirect:/admin/parties?msg=Festa apagada com sucesso");
+    }
+
     @PostMapping("/save")
     public ModelAndView saveParty(
             @RequestParam("eventName") String eventName,
@@ -111,5 +119,18 @@ public class AdminMVCController {
         return new ModelAndView("redirect:/admin/parties/?msg=Salvo com sucesso");
     }
 
+    @GetMapping("/invited/{id}")
+    public ModelAndView convidados(HttpSession session, @PathVariable() Integer id) {
+        if(!isLogged(session)){
+            return new ModelAndView("redirect:/admin/?wrong-password");
+        }
+
+        party party = partyRepository.findById(id).get();
+        ModelAndView modelAndView = new ModelAndView("admin/invited");
+
+        modelAndView.addObject("party", party);
+
+        return modelAndView;
+    }
 
 }

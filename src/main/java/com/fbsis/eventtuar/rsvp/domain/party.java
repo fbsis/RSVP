@@ -46,4 +46,10 @@ public class party {
         this.inviteUrl = UUID.randomUUID().toString().substring(0,8);
     }
 
+    public int countInvites(){
+        return this.invites.size();
+    }
+
+
+
 }

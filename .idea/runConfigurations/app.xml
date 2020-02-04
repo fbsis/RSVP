@@ -1,0 +1,9 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="app" type="Application" factoryName="Application">
+    <option name="MAIN_CLASS_NAME" value="com.fbsis.eventtuar.rsvp.RsvpApplication" />
+    <module name="rsvp" />
+    <method v="2">
+      <option name="Make" enabled="true" />
+    </method>
+  </configuration>
+</component>

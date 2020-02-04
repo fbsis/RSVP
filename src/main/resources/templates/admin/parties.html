@@ -4,6 +4,9 @@
 
 <div class="container">
 
+    <p th:if="${#request.getParameter('msg') != null}" class="alert alert-danger" role="alert" th:text="${#request.getParameter('msg')}">A senha está errada</p>
+
+
     <div class="row">
         <div class="col-sm">
             Olá <b th:text="${session.logado.name}" ></b>
@@ -22,28 +25,24 @@
             <th scope="col">#</th>
             <th scope="col">Nome</th>
             <th scope="col">data</th>
-            <th scope="col">Apagar</th>
+            <th scope="col">Convidados</th>
+            <th scope="col">Link</th>
         </tr>
         </thead>
         <tbody>
-        <tr>
-            <th scope="row">1</th>
-            <td>Mark</td>
-            <td>Otto</td>
-            <td>@mdo</td>
+
+
+        <tr th:each="party: ${parties}">
+            <th scope="row" th:text="${party.id}"></th>
+            <td ><a th:text="${party.eventName}" th:href="'/admin/invited/' + ${party.id}"></a></td>
+            <td th:text="${party.data}"></td>
+            <td th:text="${party.countInvites()}"></td>
+
+            <td ><a th:href="'apagar/' + ${party.id}">Apagar</a></td>
         </tr>
-        <tr>
-            <th scope="row">2</th>
-            <td>Jacob</td>
-            <td>Thornton</td>
-            <td>@fat</td>
-        </tr>
-        <tr>
-            <th scope="row">3</th>
-            <td>Larry</td>
-            <td>the Bird</td>
-            <td>@twitter</td>
-        </tr>
+
+
+
         </tbody>
     </table>
 

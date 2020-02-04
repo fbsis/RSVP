@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<div th:replace="fragments/header"></div>
+
+<style>
+  .tbRow {
+    border: 1px solid rgba(0, 0, 0, .125);
+  }
+</style>
+<div class="container">
+    <div class="row">
+        <div class=" col-md-12">
+            <label for="nome">Evento:</label>
+            <b th:text="${detalhes.eventName}"></b>
+        </div>
+        <div class="col-md-12">
+            <label for="nome">Data:</label>
+            <b th:text="${detalhes.data}"></b>
+        </div>
+        <div class="col-md-12">
+            <label for="nome">Local:</label>
+            <b th:text="${detalhes.local}"></b>
+        </div>
+        <div class="col-md-12">
+            <label for="nome">Horário:</label>
+            <b th:text="${detalhes.hour}"></b>
+        </div>
+
+        <div class="col-md-12">
+            <b th:text="${detalhes.description}"></b>
+        </div>
+    </div>
+
+    <hr>
+    
+    <div class="card" >
+      <div class="card-body">
+        <h5 class="card-title">O seu convite foi confirmado</h5>
+        <p class="card-text">Obrigado por responder ao nosso RSVP</p>
+        <p class="card-text">Te aguardamos na nossa festa!</p>
+      </div>
+    </div>
+    
+
+</div>
+
+<div th:replace="fragments/footer"></div>
+
+</html>

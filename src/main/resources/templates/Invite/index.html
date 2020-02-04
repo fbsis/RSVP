@@ -45,16 +45,30 @@
       </div>
     </div>
 
-    <div class="form-group col-md-12">
+    <div>Acompanhantes</div>
+    <div class="form-row">
+      
       <label for="nacompanhantes">Número de acompanhantes</label>
-      <input type="nacompanhantes" class="form-control" id="nacompanhantes" placeholder="Número de acompanhantes" />
+      <select class="form-control" id="nacompanhantes">
+        <option selected>Não vou levar nenhum acompanhante</option>
+        <option>1</option>
+        <option>2</option>
+        <option>3</option>
+        <option>4</option>
+        <option>5</option>
+      </select>
     </div>
 
     <div class="form-row tbConvidados">
 
     </div>
 
-    <button type="button" onclick="submit()" class="btn btn-primary">Enviar dados do convite</button>
+    <br>
+    <div class="form-row">
+      <button type="button" onclick="submit()" class="btn btn-primary btn-block">Enviar dados do convite</button>
+    </div>
+
+
   </form>
 </div>
 
@@ -64,21 +78,27 @@
   function tb($id) {
     $id_humano = $id + 1;
     $template =
-      '<div class="form-group col-md-8 rowAcompanhante"><label for="nome">Nome ' + $id_humano +'</label>'+
-      '<input type="input" class="form-control" name="acompanhante[]" placeholder="Nome"/></div>' + 
-      '<div class="form-group col-md-4 rowAcompanhante"><label for="nome"><input type="checkbox" onclick="checkCrianca(this)">É uma criança </label>'+
-      '<input type="input" class="form-control d-none" name="idade[]" placeholder="Idade da criança" /></div>'
+      '<div class="form-group col-md-8 rowAcompanhante">'+
+        '<label for="nome">Acompanhante ' + $id_humano +'</label>'+
+        '<input type="input" class="form-control" name="acompanhante[]" placeholder="Nome"/>' +
+      '</div>' +  
+      '<div class="form-group col-md-4 rowAcompanhante">'+
+        '<label for="nome" class="input_checkbox">Se for criança, informe a idade</label>' +
+      '<input type="input" class="form-control" name="idade[]" placeholder="Idade da criança" />' +
+      '</div><hr>'
     return $template;
   }
 
   function checkCrianca(val){
     console.log(val, $(val).val());
 
-    select = $(val).parent().parent().find('input.form-control');
+    select = $(val).parent().parent();
     if($(val).is(":checked")){
-     select.removeClass('d-none');
+      select.find('input.form-control').removeClass('d-none');
+      select.find('.input_checkbox').hide();
     }else{
-     select.addClass('d-none');
+
+     select.find('input.form-control').addClass('d-none');
     }
 
   }
