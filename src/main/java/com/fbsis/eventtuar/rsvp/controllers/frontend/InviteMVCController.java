@@ -1,20 +1,25 @@
 package com.fbsis.eventtuar.rsvp.controllers.frontend;
 
-import com.fbsis.eventtuar.rsvp.controllers.request.InviteRequest;
 import com.fbsis.eventtuar.rsvp.domain.invites;
 import com.fbsis.eventtuar.rsvp.domain.party;
 import com.fbsis.eventtuar.rsvp.repository.invitesRepository;
 import com.fbsis.eventtuar.rsvp.repository.partyRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ByteArrayResource;
+import org.springframework.core.io.FileSystemResource;
+import org.springframework.core.io.Resource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpServletResponse;
+import java.io.*;
+import java.sql.Blob;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 @Controller
 @RequestMapping("")
@@ -25,6 +30,9 @@ public class InviteMVCController {
 
     @Autowired
     public partyRepository partyRep;
+
+    private static String UPLOADED_FOLDER = "D://dados//Coding//rsvp//imagens//";
+
 
     @GetMapping("/{inviteUrl}")
     public ModelAndView index(@PathVariable() String inviteUrl) {
@@ -38,6 +46,7 @@ public class InviteMVCController {
         modelAndView.addObject("url", inviteUrl);
 
         modelAndView.addObject("urlSave", "/"+inviteUrl+"/save");
+        modelAndView.addObject("imagem", search.get().imagem);
 
 
         modelAndView.addObject("detalhes", search.get());
@@ -93,4 +102,17 @@ public class InviteMVCController {
 
         return modelAndView;
     }
+
+    @GetMapping(
+            value = "{inviteUrl}/imagem",
+            produces = MediaType.IMAGE_JPEG_VALUE
+    )
+    @ResponseBody
+    public FileSystemResource download(@PathVariable("inviteUrl")
+                                   String inviteUrl, HttpServletResponse response) {
+        response.setContentType("image/jpg");
+        response.setHeader("Content-Disposition", " filename=imagem.jpg");
+        return new FileSystemResource(new File(UPLOADED_FOLDER + inviteUrl));
+    }
+
 }

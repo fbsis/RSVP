@@ -9,15 +9,22 @@ import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpSession;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.Date;
 import java.util.Optional;
+import java.util.Random;
+import java.util.UUID;
 
 @Controller
 @RequestMapping("/admin")
@@ -28,6 +35,9 @@ public class AdminMVCController {
 
     @Autowired
     public partyRepository partyRepository;
+
+    private static String UPLOADED_FOLDER = "D://dados//Coding//rsvp//imagens//";
+
 
     private Boolean isLogged(HttpSession session){
         return session.getAttribute("logado") != null;
@@ -84,14 +94,19 @@ public class AdminMVCController {
 
 
     @GetMapping("/apagar/{id}")
-    public ModelAndView apagar(HttpSession session, @PathVariable() Integer id) {
+    public ModelAndView apagar(HttpSession session, @PathVariable() Integer id) throws IOException {
         if(!isLogged(session)){
             return new ModelAndView("redirect:/admin/?wrong-password");
         }
+        party resParty = partyRepository.findById(id).get();
+        String local = UPLOADED_FOLDER + "/" + resParty.inviteUrl;
 
+        if(Files.exists(Paths.get(local))){
+            Files.delete(Paths.get(local));
+        }
         partyRepository.deleteById(id);
 
-        return new ModelAndView("redirect:/admin/parties?msg=Festa apagada com sucesso");
+        return new ModelAndView("redirect:/admin/parties?msg=Evento apagada com sucesso");
     }
 
     @PostMapping("/save")
@@ -101,8 +116,9 @@ public class AdminMVCController {
             @RequestParam("hour") String hour,
             @RequestParam("local")  String local,
             @RequestParam("description") String description,
+            @RequestParam("imagem") MultipartFile file,
 
-            HttpSession session) throws ParseException {
+            HttpSession session) throws ParseException, IOException {
         if(!isLogged(session)){
             return new ModelAndView("redirect:/admin/?wrong-password");
         }
@@ -114,7 +130,16 @@ public class AdminMVCController {
         partyResource.local = local;
         partyResource.description = description;
 
+
+        // pegando o arquivo e salvando em algum lugar
+        if(file.getBytes().length > 0){
+            byte[] bytes = file.getBytes();
+            Path path = Paths.get( UPLOADED_FOLDER +  partyResource.inviteUrl);
+            Files.write(path, bytes);
+            partyResource.imagem = "-";
+        }
         partyRepository.save(partyResource);
+
 
         return new ModelAndView("redirect:/admin/parties/?msg=Salvo com sucesso");
     }
@@ -132,5 +157,7 @@ public class AdminMVCController {
 
         return modelAndView;
     }
+
+
 
 }

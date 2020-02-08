@@ -9,6 +9,8 @@
 </style>
 <div class="container">
   <div class="row">
+    <span th:if="${detalhes.imagem != null}" class="align-content-center"><img alt="img" th:src="${detalhes.inviteUrl} + '/imagem'" class="img-fluid rounded "></span>
+
     <div class=" col-md-12">
       <label for="nome">Evento:</label>
       <b th:text="${detalhes.eventName}"></b>
@@ -27,7 +29,7 @@
     </div>
 
     <div class="col-md-12">
-      <b th:text="${detalhes.description}"></b>
+      <div style="white-space: pre;" th:text="${detalhes.description}"></div>
     </div>
   </div>
 

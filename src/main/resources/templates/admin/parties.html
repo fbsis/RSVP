@@ -14,19 +14,20 @@
     </div>
     <div class="row">
         <div class="col-sm text-right">
-            <a type="button" class="btn btn-primary" th:href="@{/admin/add}">Nova Festa</a>
+            <a type="button" class="btn btn-primary" th:href="@{/admin/add}">Novo Evento</a>
         </div>
     </div>
 <br>
 
-    <table class="table">
-        <thead class="thead-dark">
+    <table class="table ">
+        <thead class="thead-dark t">
         <tr>
             <th scope="col">#</th>
             <th scope="col">Nome</th>
             <th scope="col">data</th>
             <th scope="col">Convidados</th>
             <th scope="col">Link</th>
+            <th scope="col"></th>
         </tr>
         </thead>
         <tbody>
@@ -37,7 +38,7 @@
             <td ><a th:text="${party.eventName}" th:href="'/admin/invited/' + ${party.id}"></a></td>
             <td th:text="${party.data}"></td>
             <td th:text="${party.countInvites()}"></td>
-
+            <td ><a th:href="'/' + ${party.inviteUrl}">Link</a></td>
             <td ><a th:href="'apagar/' + ${party.id}">Apagar</a></td>
         </tr>
 
@@ -50,4 +51,4 @@
 
 </div>
 
-<div th:replace="fragments/footer"></div>
+<div th:replace="fragments/footer" ></div>

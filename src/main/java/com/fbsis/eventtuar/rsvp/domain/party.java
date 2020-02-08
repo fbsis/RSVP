@@ -3,9 +3,11 @@ package com.fbsis.eventtuar.rsvp.domain;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 import org.hibernate.annotations.Type;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
+import java.sql.Blob;
 import java.sql.Time;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -35,6 +37,8 @@ public class party {
     public String description;
 
     public String password;
+
+    public String imagem;
 
     @OneToMany(
             cascade = CascadeType.ALL,
