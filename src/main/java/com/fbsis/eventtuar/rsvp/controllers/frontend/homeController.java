@@ -15,6 +15,6 @@ public class homeController {
 
         //return "index";
         response.sendRedirect("http://www.eventtuar.com.br/");
-        
+
     }
 }
