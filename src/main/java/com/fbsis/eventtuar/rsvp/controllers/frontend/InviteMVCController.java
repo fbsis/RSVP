@@ -1,9 +1,11 @@
 package com.fbsis.eventtuar.rsvp.controllers.frontend;
 
+import com.amazonaws.util.IOUtils;
 import com.fbsis.eventtuar.rsvp.domain.invites;
 import com.fbsis.eventtuar.rsvp.domain.party;
 import com.fbsis.eventtuar.rsvp.repository.invitesRepository;
 import com.fbsis.eventtuar.rsvp.repository.partyRepository;
+import com.fbsis.eventtuar.rsvp.services.StorageServices;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.core.io.FileSystemResource;
@@ -17,6 +19,8 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.sql.Blob;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -31,8 +35,8 @@ public class InviteMVCController {
     @Autowired
     public partyRepository partyRep;
 
-    private static String UPLOADED_FOLDER = "D://dados//Coding//rsvp//imagens//";
-
+    @Autowired
+    public StorageServices storage;
 
     @GetMapping("/{inviteUrl}")
     public ModelAndView index(@PathVariable() String inviteUrl) {
@@ -109,10 +113,17 @@ public class InviteMVCController {
     )
     @ResponseBody
     public FileSystemResource download(@PathVariable("inviteUrl")
-                                   String inviteUrl, HttpServletResponse response) {
+                                   String inviteUrl, HttpServletResponse response) throws IOException {
+
         response.setContentType("image/jpg");
+        response.addHeader("Cache-Control", "max-age=20");
         response.setHeader("Content-Disposition", " filename=imagem.jpg");
-        return new FileSystemResource(new File(UPLOADED_FOLDER + inviteUrl));
+
+        File tempFile = File.createTempFile("capaEvent", ".tmp");
+        byte[] bytes = IOUtils.toByteArray(storage.get("capa/" + inviteUrl + ".jpg" ).getObjectContent());
+        Files.write(Paths.get(tempFile.getAbsolutePath()), bytes);
+
+        return new FileSystemResource(tempFile);
     }
 
 }

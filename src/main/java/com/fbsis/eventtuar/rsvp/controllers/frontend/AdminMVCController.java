@@ -4,6 +4,7 @@ import com.fbsis.eventtuar.rsvp.domain.party;
 import com.fbsis.eventtuar.rsvp.domain.user;
 import com.fbsis.eventtuar.rsvp.repository.partyRepository;
 import com.fbsis.eventtuar.rsvp.repository.userRepository;
+import com.fbsis.eventtuar.rsvp.services.StorageServices;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
@@ -13,6 +14,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpSession;
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -35,6 +37,9 @@ public class AdminMVCController {
 
     @Autowired
     public partyRepository partyRepository;
+
+    @Autowired
+    public StorageServices storage;
 
     private static String UPLOADED_FOLDER = "D://dados//Coding//rsvp//imagens//";
 
@@ -98,14 +103,10 @@ public class AdminMVCController {
         if(!isLogged(session)){
             return new ModelAndView("redirect:/admin/?wrong-password");
         }
+
         party resParty = partyRepository.findById(id).get();
-        String local = UPLOADED_FOLDER + "/" + resParty.inviteUrl;
-
-        if(Files.exists(Paths.get(local))){
-            Files.delete(Paths.get(local));
-        }
+        storage.delete("capa/" + resParty.inviteUrl);
         partyRepository.deleteById(id);
-
         return new ModelAndView("redirect:/admin/parties?msg=Evento apagada com sucesso");
     }
 
@@ -134,8 +135,9 @@ public class AdminMVCController {
         // pegando o arquivo e salvando em algum lugar
         if(file.getBytes().length > 0){
             byte[] bytes = file.getBytes();
-            Path path = Paths.get( UPLOADED_FOLDER +  partyResource.inviteUrl);
-            Files.write(path, bytes);
+            File tempFile = File.createTempFile("capaEvent", ".tmp");
+            Files.write(Paths.get(tempFile.getAbsolutePath()), bytes);
+            storage.put("capa/"+partyResource.inviteUrl + ".jpg", tempFile );
             partyResource.imagem = "-";
         }
         partyRepository.save(partyResource);

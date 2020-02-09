@@ -1,5 +1,14 @@
 <component name="ProjectRunConfigurationManager">
   <configuration default="false" name="app" type="Application" factoryName="Application">
+    <envs>
+      <env name="STORAGE_ENDPOINT" value="http://localhost:32786" />
+      <env name="STORAGE_BUCKETNAME" value="eventuar-rsvp" />
+      <env name="STORAGE_ACESSKEY" value="adminBucketAcess2019" />
+      <env name="STORAGE_SECRETKEY" value="adminBucketSecret2019" />
+      <env name="DB_URL" value="jdbc:mysql://raspberry.fbsis.com:3306/rsvp" />
+      <env name="DB_USERNAME" value="root" />
+      <env name="DB_PASSWORD" value="37315052" />
+    </envs>
     <option name="MAIN_CLASS_NAME" value="com.fbsis.eventtuar.rsvp.RsvpApplication" />
     <module name="rsvp" />
     <method v="2">
