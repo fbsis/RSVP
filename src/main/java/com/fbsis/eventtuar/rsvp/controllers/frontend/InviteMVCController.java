@@ -116,7 +116,7 @@ public class InviteMVCController {
                                    String inviteUrl, HttpServletResponse response) throws IOException {
 
         response.setContentType("image/jpg");
-        response.addHeader("Cache-Control", "max-age=20");
+        //response.addHeader("Cache-Control", "max-age=20");
         response.setHeader("Content-Disposition", " filename=imagem.jpg");
 
         File tempFile = File.createTempFile("capaEvent", ".tmp");

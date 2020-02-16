@@ -5,7 +5,7 @@
       <env name="STORAGE_BUCKETNAME" value="eventuar-rsvp" />
       <env name="STORAGE_ACESSKEY" value="adminBucketAcess2019" />
       <env name="STORAGE_SECRETKEY" value="adminBucketSecret2019" />
-      <env name="DB_URL" value="jdbc:mysql://raspberry.fbsis.com:3306/rsvp" />
+      <env name="DB_URL" value="jdbc:mysql://localhost:3306/eventuar_rsvp?useSSL=false" />
       <env name="DB_USERNAME" value="root" />
       <env name="DB_PASSWORD" value="37315052" />
     </envs>

@@ -32,9 +32,14 @@ public class party {
 
     public String hour;
 
+    @Lob
     public String local;
 
+    @Lob
     public String description;
+
+    @Lob
+    public String sucesso;
 
     public String password;
 

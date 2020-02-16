@@ -6,10 +6,18 @@
   .tbRow {
     border: 1px solid rgba(0, 0, 0, .125);
   }
+  .i-am-centered { margin: auto; max-width: 500px;}
+
 </style>
 <div class="container">
+  <div class="row align-items-center i-am-centered">
+    <span th:if="${detalhes.imagem != null}" class="text-center">
+      <img alt="img" th:src="${detalhes.inviteUrl} + '/imagem'" class="img-fluid rounded mx-auto d-block ">asd
+    </span>
+  </div>
+
   <div class="row">
-    <span th:if="${detalhes.imagem != null}" class="align-content-center"><img alt="img" th:src="${detalhes.inviteUrl} + '/imagem'" class="img-fluid rounded "></span>
+
 
     <div class=" col-md-12">
       <label for="nome">Evento:</label>
@@ -25,17 +33,17 @@
     </div>
     <div class="col-md-12">
       <label for="nome">Horário:</label>
-      <b th:text="${detalhes.hour}"></b>
+      <b th:utext="${detalhes.hour}"></b>
     </div>
 
     <div class="col-md-12">
-      <div style="white-space: pre;" th:text="${detalhes.description}"></div>
+      <div  th:utext="${detalhes.description}"></div>
     </div>
   </div>
 
   <hr>
   <form method="post" th:action="${urlSave}" >
-    <div>Meus dados</div>
+    <div>Inserir as informações dos convidados aqui</div>
     <div class="form-row">
       <div class="form-group col-md-6">
         <label for="nome">Nome</label>
@@ -58,6 +66,11 @@
         <option>3</option>
         <option>4</option>
         <option>5</option>
+        <option>6</option>
+        <option>7</option>
+        <option>8</option>
+        <option>9</option>
+        <option>10</option>
       </select>
     </div>
 
@@ -67,7 +80,7 @@
 
     <br>
     <div class="form-row">
-      <button type="button" onclick="submit()" class="btn btn-primary btn-block">Enviar dados do convite</button>
+      <button type="button" onclick="submit()" class="btn btn-primary btn-block">Confirmar convidados acima</button>
     </div>
 
 

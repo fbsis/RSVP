@@ -94,9 +94,27 @@ public class AdminMVCController {
             return new ModelAndView("redirect:/admin/?wrong-password");
         }
         ModelAndView modelAndView = new ModelAndView("admin/parties_form");
+        party resParty = new party();
+
+        resParty.sucesso = "<h5>A sua presença e de seu(s) acompanhante(s) está confirmada!</h5>";
+
+        modelAndView.addObject("party", resParty);
+
         return modelAndView;
     }
 
+    @GetMapping("/editar/{id}")
+    public ModelAndView edit(HttpSession session,  @PathVariable() Integer id) {
+        if(!isLogged(session)){
+            return new ModelAndView("redirect:/admin/?wrong-password");
+        }
+        party resParty = partyRepository.findById(id).get();
+        ModelAndView modelAndView = new ModelAndView("admin/parties_form");
+        modelAndView.addObject("party", resParty);
+
+
+        return modelAndView;
+    }
 
     @GetMapping("/apagar/{id}")
     public ModelAndView apagar(HttpSession session, @PathVariable() Integer id) throws IOException {
@@ -112,11 +130,13 @@ public class AdminMVCController {
 
     @PostMapping("/save")
     public ModelAndView saveParty(
+            @RequestParam("id") Integer id,
             @RequestParam("eventName") String eventName,
             @RequestParam("data")  String data,
             @RequestParam("hour") String hour,
             @RequestParam("local")  String local,
             @RequestParam("description") String description,
+            @RequestParam("sucesso") String sucesso,
             @RequestParam("imagem") MultipartFile file,
 
             HttpSession session) throws ParseException, IOException {
@@ -124,12 +144,20 @@ public class AdminMVCController {
             return new ModelAndView("redirect:/admin/?wrong-password");
         }
 
-        party partyResource = new party();
+        party partyResource;
+        if(id == null){
+            partyResource = new party();
+        }else{
+            partyResource = partyRepository.findById(id).get();
+            partyResource.id = id;
+        }
+
         partyResource.eventName = eventName;
         partyResource.data = data;
         partyResource.hour = hour;
         partyResource.local = local;
         partyResource.description = description;
+        partyResource.sucesso = sucesso;
 
 
         // pegando o arquivo e salvando em algum lugar

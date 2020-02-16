@@ -1,51 +1,91 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
-
 <div th:replace="fragments/header"></div>
 
 <div class="container">
 
-    <form  method="post" th:action="@{/admin/save}" enctype="multipart/form-data">
+    <form method="post" th:action="@{/admin/save}" enctype="multipart/form-data">
         <div class="form-group">
             <label for="eventName">Nome do Evento</label>
-            <input type="input" class="form-control" id="eventName" name="eventName" required>
+            <input type="input" class="form-control" id="eventName" name="eventName" required
+                th:value="${party.eventName}">
             <small class="form-text text-muted">Por exemplo: Casamento de Vanessa & Felipe</small>
         </div>
 
         <div class="form-group">
             <label for="imagem">Imagem</label>
             <input type="file" class="form-control-file" id="imagem" name="imagem">
+            <a th:href="'/' + ${party.inviteUrl} + '/imagem'" target="_blank"><img alt="img"
+                    th:src="'/' + ${party.inviteUrl} + '/imagem'" th:if="${party.imagem}" width="250"
+                    class="img-fluid rounded mx-auto d-block ">
+            </a>
+
         </div>
 
         <div class="form-group">
             <label for="data">Data do evento</label>
-            <input type="text" class="form-control" id="data" name="data" required>
+            <input type="text" class="form-control" id="data" name="data"  th:value="${party.data}">
             <small class="form-text text-muted">DD/MM/AAAA</small>
         </div>
 
         <div class="form-group">
             <label for="hour">Hora</label>
-            <input type="time" class="form-control" id="hour" name="hour" required>
+            <input type="time" class="form-control" id="hour" name="hour"  th:value="${party.hour}">
         </div>
 
         <div class="form-group">
             <label for="local">Local</label>
-            <textarea class="form-control" id="local" name="local" required></textarea>
+            <textarea class="form-control" id="local" name="local"  th:field="${party.local}"></textarea>
             <small class="form-text text-muted">Exemplo: Salão de festas Rapadura de são josé, endereço....</small>
         </div>
 
         <div class="form-group">
             <label for="local">Descrição</label>
-            <textarea class="form-control" id="description" name="description"></textarea>
+            <textarea class="form-control" id="description" name="description"
+                th:field="${party.description}"></textarea>
             <small class="form-text text-muted">Descrição do evento ou avisos pertinentes (Opcional)</small>
         </div>
 
-        <input type="hidden" class="form-control" id="id" name="id">
+        <div class="form-group">
+            <label for="local">Mensagem de sucesso</label>
+            <textarea class="form-control" id="sucesso" name="sucesso" th:field="${party.sucesso}"></textarea>
+            <small class="form-text text-muted">Coloque a mensagem que você quer que apareça no campo de sucesso</small>
+        </div>
+
+        <input type="hidden" class="form-control" id="id" name="id" th:value="${party.id}">
         <button type="submit" class="btn btn-primary">Salvar</button>
         <a href="/admin/parties/" class="btn btn-link">Voltar</a>
     </form>
 
+    <script src="https://cdn.tiny.cloud/1/onyfaea711e2bhyeocyaemaufu9x7qdkwwkj87lokqj3pqkp/tinymce/5/tinymce.min.js"
+        referrerpolicy="origin"></script>
 
+
+    <script>
+        tinymce.init({
+            selector: 'textarea#sucesso',
+            skin: 'bootstrap',
+            plugins: 'lists, link, image, media',
+            toolbar: 'h1 h2 bold italic strikethrough blockquote bullist numlist backcolor | link image media | removeformat help',
+            menubar: false
+        });
+        tinymce.init({
+            selector: 'textarea#description',
+            skin: 'bootstrap',
+            plugins: 'lists, link, image, media',
+            toolbar: 'h1 h2 bold italic strikethrough blockquote bullist numlist backcolor | link image media | removeformat help',
+            menubar: false
+        });
+        tinymce.init({
+            selector: 'textarea#local',
+            skin: 'bootstrap',
+            plugins: 'lists, link, image, media',
+            toolbar: 'h1 h2 bold italic strikethrough blockquote bullist numlist backcolor | link image media | removeformat help',
+            menubar: false
+        });
+
+
+    </script>
 
 </div>
 <div th:replace="fragments/footer"></div>
