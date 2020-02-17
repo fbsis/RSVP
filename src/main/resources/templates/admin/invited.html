@@ -54,7 +54,7 @@
             <td th:text="${party.countCompanion()}"></td>
             <td>
                 <span th:each="companion: ${party.companion}">
-                <li th:text="${companion.name}"></li>
+                <li th:if="${companion.name != ''}" th:text="${companion.name} + ' - ' + ${companion.idade}"></li>
                 </span>
             </td>
             <td ><a th:href="'apagar/' + ${party.id}">Apagar</a></td>
