@@ -1,11 +1,13 @@
 <component name="ProjectRunConfigurationManager">
   <configuration default="false" name="app" type="Application" factoryName="Application">
+    <option name="ALTERNATIVE_JRE_PATH" value="1.8" />
+    <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="true" />
     <envs>
-      <env name="STORAGE_ENDPOINT" value="http://localhost:32786" />
+      <env name="STORAGE_ENDPOINT" value="http://cone.fbsis.com:9091" />
       <env name="STORAGE_BUCKETNAME" value="eventuar-rsvp" />
-      <env name="STORAGE_ACESSKEY" value="adminBucketAcess2019" />
-      <env name="STORAGE_SECRETKEY" value="adminBucketSecret2019" />
-      <env name="DB_URL" value="jdbc:mysql://localhost:3306/eventuar_rsvp?useSSL=false" />
+      <env name="STORAGE_ACESSKEY" value="adminBucketProdAcess2019" />
+      <env name="STORAGE_SECRETKEY" value="adminBucketProdSecret2019" />
+      <env name="DB_URL" value="jdbc:mysql://cone.fbsis.com:3316/eventuar_rsvp?useSSL=false" />
       <env name="DB_USERNAME" value="root" />
       <env name="DB_PASSWORD" value="37315052" />
     </envs>

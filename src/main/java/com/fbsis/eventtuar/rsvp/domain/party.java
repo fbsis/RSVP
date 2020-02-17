@@ -45,6 +45,8 @@ public class party {
 
     public String imagem;
 
+    public String imgVerso;
+
     @OneToMany(
             cascade = CascadeType.ALL,
             orphanRemoval = true

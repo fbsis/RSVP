@@ -23,6 +23,17 @@
         </div>
 
         <div class="form-group">
+            <label for="imagem">Imagem verso convite</label>
+            <input type="file" class="form-control-file" id="imgVerso" name="imgVerso">
+            <a th:href="'/' + ${party.inviteUrl} + '/verso'" target="_blank">
+                <img alt="img"
+               th:src="'/' + ${party.inviteUrl} + '/verso'" th:if="${party.imgVerso}" width="250"
+                                                                                  class="img-fluid rounded mx-auto d-block ">
+            </a>
+
+        </div>
+
+        <div class="form-group">
             <label for="data">Data do evento</label>
             <input type="text" class="form-control" id="data" name="data"  th:value="${party.data}">
             <small class="form-text text-muted">DD/MM/AAAA</small>

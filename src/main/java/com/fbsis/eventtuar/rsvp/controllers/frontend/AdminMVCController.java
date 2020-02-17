@@ -138,6 +138,8 @@ public class AdminMVCController {
             @RequestParam("description") String description,
             @RequestParam("sucesso") String sucesso,
             @RequestParam("imagem") MultipartFile file,
+            @RequestParam("imgVerso") MultipartFile imgVerso,
+
 
             HttpSession session) throws ParseException, IOException {
         if(!isLogged(session)){
@@ -168,6 +170,15 @@ public class AdminMVCController {
             storage.put("capa/"+partyResource.inviteUrl + ".jpg", tempFile );
             partyResource.imagem = "-";
         }
+
+        if(imgVerso.getBytes().length > 0){
+            byte[] bytes = imgVerso.getBytes();
+            File tempFile = File.createTempFile("versoEvent", ".tmp");
+            Files.write(Paths.get(tempFile.getAbsolutePath()), bytes);
+            storage.put("verso/"+partyResource.inviteUrl + ".jpg", tempFile );
+            partyResource.imgVerso = "-";
+        }
+
         partyRepository.save(partyResource);
 
 

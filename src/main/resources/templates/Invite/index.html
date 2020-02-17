@@ -12,7 +12,7 @@
 <div class="container">
   <div class="row align-items-center i-am-centered">
     <span th:if="${detalhes.imagem != null}" class="text-center">
-      <img alt="img" th:src="${detalhes.inviteUrl} + '/imagem'" class="img-fluid rounded mx-auto d-block ">asd
+      <img alt="img" th:src="'/'+${detalhes.inviteUrl} + '/imagem'" class="img-fluid rounded mx-auto d-block ">
     </span>
   </div>
 
@@ -29,7 +29,7 @@
     </div>
     <div class="col-md-12">
       <label for="nome">Local:</label>
-      <b th:text="${detalhes.local}"></b>
+      <b th:utext="${detalhes.local}"></b>
     </div>
     <div class="col-md-12">
       <label for="nome">Horário:</label>

@@ -19,7 +19,7 @@
         </div>
         <div class="col-md-12">
             <label for="nome">Local:</label>
-            <b th:text="${detalhes.local}"></b>
+            <b th:utext="${detalhes.local}"></b>
         </div>
         <div class="col-md-12">
             <label for="nome">Horário:</label>
@@ -27,15 +27,21 @@
         </div>
 
         <div class="col-md-12">
-            <b th:text="${detalhes.description}"></b>
+            <b th:utext="${detalhes.description}"></b>
         </div>
+    </div>
+
+    <div class="row align-items-center i-am-centered">
+        <span th:if="${detalhes.inviteUrl != null}" class="text-center">
+          <img alt="img" th:src="'/' + ${detalhes.inviteUrl} + '/verso'" class="img-fluid rounded mx-auto d-block ">
+        </span>
     </div>
 
     <hr>
     
     <div class="card" >
       <div class="card-body">
-        <span class="card-title" th:text="${detalhes.sucesso}"></span>
+        <span class="card-title" th:utext="${detalhes.sucesso}"></span>
       </div>
     </div>
     

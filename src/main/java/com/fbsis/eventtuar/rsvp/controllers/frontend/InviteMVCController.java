@@ -108,19 +108,29 @@ public class InviteMVCController {
     }
 
     @GetMapping(
-            value = "{inviteUrl}/imagem",
+            value = "{inviteUrl}/{typeImage}",
             produces = MediaType.IMAGE_JPEG_VALUE
     )
     @ResponseBody
-    public FileSystemResource download(@PathVariable("inviteUrl")
-                                   String inviteUrl, HttpServletResponse response) throws IOException {
+    public FileSystemResource download(@PathVariable("inviteUrl")      String inviteUrl,
+                                       @PathVariable("typeImage")      String typeImage,
+                                       HttpServletResponse response) throws IOException {
 
+        String tempName = "";
+        String bucketName = "";
+        if(typeImage.equals("imagem")){
+            tempName = "capaEvent";
+            bucketName = "capa";
+        }else{
+            tempName = "versoEvent";
+            bucketName = "verso";
+        }
         response.setContentType("image/jpg");
         //response.addHeader("Cache-Control", "max-age=20");
         response.setHeader("Content-Disposition", " filename=imagem.jpg");
 
-        File tempFile = File.createTempFile("capaEvent", ".tmp");
-        byte[] bytes = IOUtils.toByteArray(storage.get("capa/" + inviteUrl + ".jpg" ).getObjectContent());
+        File tempFile = File.createTempFile(tempName, ".tmp");
+        byte[] bytes = IOUtils.toByteArray(storage.get(bucketName + "/" + inviteUrl + ".jpg" ).getObjectContent());
         Files.write(Paths.get(tempFile.getAbsolutePath()), bytes);
 
         return new FileSystemResource(tempFile);
