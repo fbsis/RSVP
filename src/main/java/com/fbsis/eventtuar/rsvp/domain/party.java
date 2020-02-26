@@ -5,6 +5,7 @@ import lombok.Data;
 import org.hibernate.annotations.Type;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.stereotype.Indexed;
 
 import javax.persistence.*;
 import java.sql.Blob;
@@ -47,6 +48,8 @@ public class party {
 
     public String imgVerso;
 
+    public Boolean active;
+
     @OneToMany(
             cascade = CascadeType.ALL,
             orphanRemoval = true
@@ -55,6 +58,7 @@ public class party {
 
     public party() {
         this.inviteUrl = UUID.randomUUID().toString().substring(0,8);
+        this.active = true;
     }
 
     public int countInvites(){

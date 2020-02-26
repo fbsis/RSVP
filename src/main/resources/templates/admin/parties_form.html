@@ -26,27 +26,26 @@
             <label for="imagem">Imagem verso convite</label>
             <input type="file" class="form-control-file" id="imgVerso" name="imgVerso">
             <a th:href="'/' + ${party.inviteUrl} + '/verso'" target="_blank">
-                <img alt="img"
-               th:src="'/' + ${party.inviteUrl} + '/verso'" th:if="${party.imgVerso}" width="250"
-                                                                                  class="img-fluid rounded mx-auto d-block ">
+                <img alt="img" th:src="'/' + ${party.inviteUrl} + '/verso'" th:if="${party.imgVerso}" width="250"
+                    class="img-fluid rounded mx-auto d-block ">
             </a>
 
         </div>
 
         <div class="form-group">
             <label for="data">Data do evento</label>
-            <input type="text" class="form-control" id="data" name="data"  th:value="${party.data}">
+            <input type="text" class="form-control" id="data" name="data" th:value="${party.data}">
             <small class="form-text text-muted">DD/MM/AAAA</small>
         </div>
 
         <div class="form-group">
             <label for="hour">Hora</label>
-            <input type="time" class="form-control" id="hour" name="hour"  th:value="${party.hour}">
+            <input type="time" class="form-control" id="hour" name="hour" th:value="${party.hour}">
         </div>
 
         <div class="form-group">
             <label for="local">Local</label>
-            <textarea class="form-control" id="local" name="local"  th:field="${party.local}"></textarea>
+            <textarea class="form-control" id="local" name="local" th:field="${party.local}"></textarea>
             <small class="form-text text-muted">Exemplo: Salão de festas Rapadura de são josé, endereço....</small>
         </div>
 
@@ -61,6 +60,13 @@
             <label for="local">Mensagem de sucesso</label>
             <textarea class="form-control" id="sucesso" name="sucesso" th:field="${party.sucesso}"></textarea>
             <small class="form-text text-muted">Coloque a mensagem que você quer que apareça no campo de sucesso</small>
+        </div>
+
+        <div class="form-check">
+            <input class="form-check-input" type="checkbox" value="1" id="active" name="active" th:checked="${party.active}">
+            <label class="form-check-label" for="active">
+                Formulário aberto
+            </label>
         </div>
 
         <input type="hidden" class="form-control" id="id" name="id" th:value="${party.id}">

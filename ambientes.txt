@@ -1,0 +1,4 @@
+Produçao
+STORAGE_ENDPOINT=http://cone.fbsis.com:9091;STORAGE_BUCKETNAME=eventuar-rsvp;STORAGE_ACESSKEY=adminBucketProdAcess2019;STORAGE_SECRETKEY=adminBucketProdSecret2019;DB_URL=jdbc:mysql://cone.fbsis.com:3316/eventuar_rsvp?useSSL\=false;DB_USERNAME=root;DB_PASSWORD=37315052
+
+Desenvolvimento

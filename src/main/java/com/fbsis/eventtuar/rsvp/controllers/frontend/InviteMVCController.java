@@ -43,7 +43,7 @@ public class InviteMVCController {
 
         Optional<party> search = partyRep.findByInviteUrl(inviteUrl);
 
-        if(!search.isPresent() || inviteUrl.equals("admin"))
+        if(!search.isPresent() || inviteUrl.equals("admin") || search.get().active == false)
             return new ModelAndView("Invite/invalido");
 
         ModelAndView modelAndView = new ModelAndView("Invite/index");

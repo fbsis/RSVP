@@ -1,7 +1,9 @@
 package com.fbsis.eventtuar.rsvp.controllers.frontend;
 
+import com.fbsis.eventtuar.rsvp.domain.invites;
 import com.fbsis.eventtuar.rsvp.domain.party;
 import com.fbsis.eventtuar.rsvp.domain.user;
+import com.fbsis.eventtuar.rsvp.repository.invitesRepository;
 import com.fbsis.eventtuar.rsvp.repository.partyRepository;
 import com.fbsis.eventtuar.rsvp.repository.userRepository;
 import com.fbsis.eventtuar.rsvp.services.StorageServices;
@@ -27,6 +29,7 @@ import java.util.Date;
 import java.util.Optional;
 import java.util.Random;
 import java.util.UUID;
+import java.util.stream.Stream;
 
 @Controller
 @RequestMapping("/admin")
@@ -37,6 +40,9 @@ public class AdminMVCController {
 
     @Autowired
     public partyRepository partyRepository;
+
+    @Autowired
+    public invitesRepository invitesRepository;
 
     @Autowired
     public StorageServices storage;
@@ -139,6 +145,7 @@ public class AdminMVCController {
             @RequestParam("sucesso") String sucesso,
             @RequestParam("imagem") MultipartFile file,
             @RequestParam("imgVerso") MultipartFile imgVerso,
+            @RequestParam(value = "active", required = false) String active,
 
 
             HttpSession session) throws ParseException, IOException {
@@ -160,6 +167,7 @@ public class AdminMVCController {
         partyResource.local = local;
         partyResource.description = description;
         partyResource.sucesso = sucesso;
+        partyResource.active = active != null;
 
 
         // pegando o arquivo e salvando em algum lugar
@@ -200,5 +208,17 @@ public class AdminMVCController {
     }
 
 
+    @GetMapping("/invited/apagar/{url}/{id}")
+    public ModelAndView invitedRemove(HttpSession session,  @PathVariable() Integer id,  @PathVariable() String url) {
+        if(!isLogged(session)){
+            return new ModelAndView("redirect:/admin/?wrong-password");
+        }
+        party party = partyRepository.findByInviteUrl(url).get();
+        invites invite = party.invites.stream().filter(e -> e.id.equals(id)).findFirst().get();
+        party.invites.remove(invite);
+        partyRepository.save(party);
+
+        return new ModelAndView("redirect:/admin/invited/"+party.inviteUrl+"/?msg=Convidado removido");
+    }
 
 }
