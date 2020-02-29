@@ -1,29 +1,12 @@
-# README #
+# Confirmação de Presença (RSPV) #
 
-This README would normally document whatever steps are necessary to get your application up and running.
+Sistema de confirmação de presença para festas, apropriado para uma cerimonialista
 
-### What is this repository for? ###
+### O que foi usado? ###
 
-* Quick summary
-* Version
-* [Learn Markdown](https://bitbucket.org/tutorials/markdowndemo)
-
-### How do I get set up? ###
-
-* Summary of set up
-* Configuration
-* Dependencies
-* Database configuration
-* How to run tests
-* Deployment instructions
-
-### Contribution guidelines ###
-
-* Writing tests
-* Code review
-* Other guidelines
-
-### Who do I talk to? ###
-
-* Repo owner or admin
-* Other community or team contact
+* SPRING MVC
+* Thymeleaf
+* JPA (mysql)
+* Armazenamento de arquivos em S3 (AWS)
+* Uso de docker, para posterior uso em Kubernetes (a ser preparado)
+* Deploy via power-shell para Docker-hub
